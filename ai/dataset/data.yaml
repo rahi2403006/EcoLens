@@ -1,0 +1,12 @@
+path: /home/gh0st_in_k3rn3l/Varsity File/wastevision-ai/ai/dataset
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: plastic
+  1: paper
+  2: metal
+  3: glass
+  4: organic
+  5: other

@@ -1,0 +1,30 @@
+﻿# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# AI model weights & datasets (large files — don't commit)
+*.pt
+ai/dataset/images/
+ai/training/raw_dataset/
+ai/dataset/labels/
+ai/training/runs/
+
+# Node / Frontend
+node_modules/
+frontend/dist/
+frontend/.env
+
+# Env files
+.env
+*.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
