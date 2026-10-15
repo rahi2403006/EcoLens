@@ -12,13 +12,11 @@ from pathlib import Path
 import yaml
 
 RAW_DIR = Path("raw_dataset")
-OUT_DIR = Path("..") / "dataset"  # ai/dataset/
+OUT_DIR = Path("..") / "dataset"
 
 OUR_CLASSES = ["plastic", "paper", "metal", "glass", "organic", "other"]
 
-# STEP 1: Open raw_dataset/data.yaml, copy the "names" list here in the
-# exact order Roboflow gave it, then map EACH one to one of OUR_CLASSES below.
-# This dict is the only thing you need to edit for a different source dataset.
+
 CLASS_MAP = {
     "Aerosols": "other",
     "Aluminum can": "metal",
@@ -105,7 +103,7 @@ def process_split(split_name, out_split_name, id_remap):
                     continue
                 old_id = int(parts[0])
                 if old_id not in id_remap:
-                    continue  # skip unmapped detections
+                    continue  
                 new_id = id_remap[old_id]
                 new_lines.append(" ".join([str(new_id)] + parts[1:]))
 
@@ -137,7 +135,6 @@ def main():
     id_remap = build_id_remap(source_classes)
     print("Remap built successfully")
 
-    # Roboflow uses "valid", we use "val"
     process_split("train", "train", id_remap)
     process_split("valid", "val", id_remap)
     process_split("test", "test", id_remap)

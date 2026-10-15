@@ -1,10 +1,3 @@
-"""
-AI Inference Layer.
-Single responsibility: image bytes in -> {object, confidence, bounding_box} out.
-Never decides disposal category/bin/instruction - that's the Recommendation
-Engine's job (Phase 7).
-"""
-
 import cv2
 import numpy as np
 from ultralytics import YOLO
@@ -21,7 +14,6 @@ class AIService:
         self.device = settings.DEVICE
 
     def predict(self, image_bytes: bytes) -> RawPrediction:
-        # ছবি decode করো
         np_arr = np.frombuffer(image_bytes, np.uint8)
         img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
 
@@ -34,7 +26,6 @@ class AIService:
         if len(result.boxes) == 0:
             return RawPrediction(success=False, message="No object detected in image.")
 
-        # সবচেয়ে বেশি confidence-এর detection বেছে নাও
         confidences = result.boxes.conf.cpu().numpy()
         best_idx = int(confidences.argmax())
         best_box = result.boxes[best_idx]

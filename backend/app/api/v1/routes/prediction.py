@@ -34,9 +34,11 @@ async def predict(file: UploadFile = File(...)):
         return PredictionResponse(
             success=False,
             prediction=raw_prediction,
+            recommendation=None,
             message=raw_prediction.message or "Prediction failed.",
         )
 
+    recommendation = None
     if not raw_prediction.low_confidence:
         recommendation = get_recommendation(raw_prediction.object)
 
@@ -44,4 +46,5 @@ async def predict(file: UploadFile = File(...)):
         success=True,
         prediction=raw_prediction,
         recommendation=recommendation,
+        message=None,
     )

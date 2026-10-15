@@ -1,17 +1,17 @@
 from ultralytics import YOLO
 
 def main():
-    model = YOLO("yolov8n.pt")  # pretrained COCO weights দিয়ে শুরু (transfer learning)
+    model = YOLO("yolov8n.pt")  
 
     model.train(
         data="../dataset/data.yaml",
         epochs=50,
         imgsz=640,
         batch=16,
-        device=0,          # GPU 0 ব্যবহার করবে
+        device=0,          
         project="../training/runs",
         name="wastevision_v1",
-        patience=10,        # 10 epoch improvement না হলে early stop
+        patience=10,        
         workers=4,
     )
 
