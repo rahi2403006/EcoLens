@@ -1,1 +1,13 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+html.dark { color-scheme: dark; }
+
+
+/* Map pins (step C) */
+.ec-pin { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.35); }
+.ec-pin-sel { box-shadow: 0 0 0 4px rgba(16,185,129,.55); }
+
+/* Chart tooltip colours (step F1) */
+:root { --tt-bg: #ffffff; --tt-fg: #0f172a; --tt-bd: #e2e8f0; }
+html.dark { --tt-bg: #1e293b; --tt-fg: #e2e8f0; --tt-bd: #334155; }

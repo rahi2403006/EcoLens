@@ -18,3 +18,22 @@ export async function predictWaste(imageFile: File | Blob): Promise<PredictionRe
 
   return response.json();
 }
+
+export async function checkHealth(): Promise<boolean> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/health`);
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+
+export async function fetchRecommendations(): Promise<Record<string, { category: string; bin: string; instruction: string }> | null> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/recommendations`);
+    if (!response.ok) return null;
+    return await response.json();
+  } catch {
+    return null;
+  }
+}

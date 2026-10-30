@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import type { HistoryEntry, PredictionResponse } from "../types/prediction";
 
-const STORAGE_KEY = "wastevision_history";
+const STORAGE_KEY = "ecolens_history";
 const MAX_ENTRIES = 20;
 
 export function useHistory() {

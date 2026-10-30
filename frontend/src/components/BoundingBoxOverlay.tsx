@@ -1,49 +1,26 @@
+import { useState } from "react";
 import type { BoundingBox } from "../types/prediction";
+import { BoxLayer } from "./BoxLayer";
 
-interface BoundingBoxOverlayProps {
+interface Props {
   imageUrl: string;
   box: BoundingBox | null;
   label: string | null;
-  naturalWidth: number;
-  naturalHeight: number;
+  tone?: "ok" | "warn";
 }
 
-export function BoundingBoxOverlay({
-  imageUrl,
-  box,
-  label,
-  naturalWidth,
-  naturalHeight,
-}: BoundingBoxOverlayProps) {
-  if (!box || !naturalWidth || !naturalHeight) {
-    return <img src={imageUrl} alt="Uploaded waste" className="w-full rounded-lg" />;
-  }
-
-  // Bounding box পিক্সেল coordinate থেকে percentage-এ কনভার্ট করছি,
-  // যাতে ছবি যেকোনো সাইজে display হোক না কেন box ঠিক জায়গায় বসে
-  const left = (box.x1 / naturalWidth) * 100;
-  const top = (box.y1 / naturalHeight) * 100;
-  const width = ((box.x2 - box.x1) / naturalWidth) * 100;
-  const height = ((box.y2 - box.y1) / naturalHeight) * 100;
+export function BoundingBoxOverlay({ imageUrl, box, label, tone }: Props) {
+  const [size, setSize] = useState({ width: 0, height: 0 });
 
   return (
-    <div className="relative">
-      <img src={imageUrl} alt="Uploaded waste" className="w-full rounded-lg" />
-      <div
-        className="absolute border-2 border-green-500"
-        style={{
-          left: `${left}%`,
-          top: `${top}%`,
-          width: `${width}%`,
-          height: `${height}%`,
-        }}
-      >
-        {label && (
-          <span className="absolute -top-6 left-0 bg-green-500 text-white text-xs px-2 py-0.5 rounded">
-            {label}
-          </span>
-        )}
-      </div>
+    <div className="relative overflow-visible">
+      <img
+        src={imageUrl}
+        alt="Selected waste item"
+        className="w-full rounded-lg"
+        onLoad={(e) => setSize({ width: e.currentTarget.naturalWidth, height: e.currentTarget.naturalHeight })}
+      />
+      {box && <BoxLayer box={box} naturalWidth={size.width} naturalHeight={size.height} label={label} tone={tone} />}
     </div>
   );
 }
